@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WSKicks - Admin Login</title>
+    <link rel="stylesheet" href="stylelogin.css">
+</head>
+<body>
+    <div class="admin-login-container fade-in">
+        <div class="admin-header">
+            <div class="admin-logo">WSKicks</div>
+            <h1 class="admin-title">Admin Portal</h1>
+            <p class="admin-subtitle">Secure access to administration panel</p>
+        </div>
+
+        <!-- Pesan error -->
+        <div id="error-message" class="message error-message" style="display: none;">
+            <span id="error-text">Invalid credentials. Please try again.</span>
+        </div>
+
+        <!-- Pesan loading -->
+        <div id="loading-message" class="message loading-message" style="display: none;">
+            <span>🔐 Authenticating admin credentials...</span>
+        </div>
+
+        <!-- Pesan sukses -->
+        <div id="success-message" class="message success-message" style="display: none;">
+            <span>✅ Admin authentication successful! Redirecting...</span>
+        </div>
+
+        <form id="adminLoginForm" class="admin-form">
+            <div class="form-group">
+                <label for="adminEmail">Admin Email</label>
+                <input type="email" id="adminEmail" name="email" required autocomplete="username">
+            </div>
+
+            <div class="form-group">
+                <label for="adminPassword">Admin Password</label>
+                <div class="password-field">
+                    <input type="password" id="adminPassword" name="password" required autocomplete="current-password">
+                    <span class="password-toggle" onclick="togglePassword('adminPassword', this)">👁️</span>
+                </div>
+            </div>
+
+            <button type="submit" class="admin-login-btn" id="adminLoginBtn">
+                🔐 Admin Login
+            </button>
+        </form>
+
+        <div class="security-notice">
+            <span class="icon">🔒</span>
+            <strong>Security Notice:</strong> This is a restricted area. Only authorized administrators can access this portal. All login attempts are logged and monitored.
+        </div>
+
+        <div class="back-to-home">
+            <a href="index.html">← Back to Main Site</a>
+        </div>
+    </div>
+
+    <script>
+        // Data admin yang valid
+        const adminCredentials = [
+            { 
+                email: "admin@wskicks.com", 
+                password: "admin123",
+                role: "super_admin",
+                name: "Super Administrator"
+            },
+            { 
+                email: "manager@wskicks.com", 
+                password: "manager123",
+                role: "manager",
+                name: "Store Manager"
+            },
+            { 
+                email: "staff@wskicks.com", 
+                password: "staff123",
+                role: "staff",
+                name: "Staff Administrator"
+            }
+        ];
+
+        // Fungsi untuk toggle password visibility
+        function togglePassword(inputId, toggleIcon) {
+            const input = document.getElementById(inputId);
+            const isPassword = input.type === "password";
+            input.type = isPassword ? "text" : "password";
+            toggleIcon.textContent = isPassword ? "🙈" : "👁️";
+        }
+
+        // Fungsi untuk menampilkan pesan
+        function showMessage(type, message = '', show = true) {
+            const errorMsg = document.getElementById('error-message');
+            const loadingMsg = document.getElementById('loading-message');
+            const successMsg = document.getElementById('success-message');
+            const errorText = document.getElementById('error-text');
+            
+            // Sembunyikan semua pesan
+            errorMsg.style.display = 'none';
+            loadingMsg.style.display = 'none';
+            successMsg.style.display = 'none';
+            
+            if (show) {
+                if (type === 'error') {
+                    if (message) errorText.textContent = message;
+                    errorMsg.style.display = 'block';
+                    // Tambahkan efek shake
+                    document.querySelector('.admin-login-container').classList.add('shake');
+                    setTimeout(() => {
+                        document.querySelector('.admin-login-container').classList.remove('shake');
+                    }, 500);
+                } else if (type === 'loading') {
+                    loadingMsg.style.display = 'block';
+                } else if (type === 'success') {
+                    successMsg.style.display = 'block';
+                }
+            }
+        }
+
+        // Fungsi untuk validasi admin credentials
+        function validateAdminCredentials(email, password) {
+            return adminCredentials.find(admin => 
+                admin.email === email && admin.password === password
+            );
+        }
+
+        // Fungsi untuk redirect ke admin dashboard
+        function redirectToAdminDashboard(adminData) {
+            // Simpan data admin di sessionStorage
+            sessionStorage.setItem('adminLoggedIn', 'true');
+            sessionStorage.setItem('adminData', JSON.stringify({
+                email: adminData.email,
+                role: adminData.role,
+                name: adminData.name,
+                loginTime: new Date().toISOString()
+            }));
+            
+            // Redirect ke admin dashboard
+            window.location.href = 'admin.html';
+        }
+
+        // Fungsi untuk log login attempt
+        function logLoginAttempt(email, success, userAgent = navigator.userAgent) {
+            const logEntry = {
+                timestamp: new Date().toISOString(),
+                email: email,
+                success: success,
+                ip: 'Client-side', // Dalam aplikasi nyata, ini akan dari server
+                userAgent: userAgent
+            };
+            
+            // Simpan log di localStorage (dalam aplikasi nyata, kirim ke server)
+            let loginLogs = JSON.parse(localStorage.getItem('adminLoginLogs')) || [];
+            loginLogs.push(logEntry);
+            
+            // Simpan maksimal 100 log terakhir
+            if (loginLogs.length > 100) {
+                loginLogs = loginLogs.slice(-100);
+            }
+            
+            localStorage.setItem('adminLoginLogs', JSON.stringify(loginLogs));
+        }
+
+        // Event listener untuk form login
+        document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('adminEmail').value.trim();
+            const password = document.getElementById('adminPassword').value;
+            const loginBtn = document.getElementById('adminLoginBtn');
+            
+            // Validasi input kosong
+            if (!email || !password) {
+                showMessage('error', 'Please fill in all required fields.');
+                return;
+            }
+            
+            // Tampilkan loading
+            showMessage('loading');
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '🔄 Authenticating...';
+            
+            // Simulasi proses autentikasi admin
+            setTimeout(() => {
+                const adminData = validateAdminCredentials(email, password);
+                
+                if (adminData) {
+                    // Login berhasil
+                    logLoginAttempt(email, true);
+                    showMessage('success');
+                    
+                    // Redirect setelah 1.5 detik
+                    setTimeout(() => {
+                        redirectToAdminDashboard(adminData);
+                    }, 1500);
+                    
+                } else {
+                    // Login gagal
+                    logLoginAttempt(email, false);
+                    showMessage('error', 'Invalid admin credentials. Access denied.');
+                    
+                    // Reset button
+                    loginBtn.disabled = false;
+                    loginBtn.innerHTML = '🔐 Admin Login';
+                    
+                    // Clear password field untuk keamanan
+                    document.getElementById('adminPassword').value = '';
+                }
+            }, 1200); // Simulasi delay autentikasi
+        });
+
+        // Cek apakah admin sudah login sebelumnya
+        window.addEventListener('load', function() {
+            const adminLoggedIn = sessionStorage.getItem('adminLoggedIn');
+            const adminData = JSON.parse(sessionStorage.getItem('adminData') || '{}');
+            
+            if (adminLoggedIn === 'true' && adminData.email) {
+                // Jika sudah login, bisa redirect langsung atau tampilkan pesan
+                console.log('Admin sudah login:', adminData.name);
+                
+                // Uncomment untuk auto-redirect admin yang sudah login:
+                // showMessage('success');
+                // setTimeout(() => {
+                //     window.location.href = 'admin..html';
+                // }, 1000);
+            }
+        });
+
+        // Fokus otomatis ke email field
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('adminEmail').focus();
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Ctrl/Cmd + Enter untuk submit form
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                document.getElementById('adminLoginForm').dispatchEvent(new Event('submit'));
+            }
+        });
+
+        // Prevent multiple rapid submissions
+        let isSubmitting = false;
+        document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+            if (isSubmitting) {
+                e.preventDefault();
+                return;
+            }
+            isSubmitting = true;
+            setTimeout(() => {
+                isSubmitting = false;
+            }, 2000);
+        });
+
+        // Clear messages when user starts typing
+        document.getElementById('adminEmail').addEventListener('input', function() {
+            showMessage('error', '', false);
+        });
+
+        document.getElementById('adminPassword').addEventListener('input', function() {
+            showMessage('error', '', false);
+        });
+    </script>
+</body>
+</html>

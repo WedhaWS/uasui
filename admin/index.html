@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - WSKICKS</title>
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="admin-body">
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div class="admin-nav">
+            <div class="nav-brand">
+                <h2>WSKICKS Admin</h2>
+            </div>
+            <div class="nav-actions">
+                <div class="user-menu">
+                    <span id="admin-name">Admin User</span>
+                    <div class="user-dropdown">
+                        <a href="../profile.html">Profile</a>
+                        <a href="login.html" onclick="logout()">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#" class="nav-item active" data-tab="dashboard">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a></li>
+                    <li><a href="#" class="nav-item" data-tab="products">
+                        <i class="fas fa-box"></i> Products
+                    </a></li>
+                    <li><a href="#" class="nav-item" data-tab="orders">
+                        <i class="fas fa-shopping-bag"></i> Orders
+                    </a></li>
+                    <li><a href="#" class="nav-item" data-tab="customers">
+                        <i class="fas fa-users"></i> Customers
+                    </a></li>
+                    <li><a href="#" class="nav-item" data-tab="articles">
+                        <i class="fas fa-newspaper"></i> Articles
+                    </a></li>
+                    <li><a href="#" class="nav-item" data-tab="analytics">
+                        <i class="fas fa-chart-bar"></i> Analytics
+                    </a></li>
+                    <li><a href="#" class="nav-item" data-tab="settings">
+                        <i class="fas fa-cog"></i> Settings
+                    </a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Dashboard Tab -->
+            <div class="tab-content active" id="dashboard-tab">
+                <div class="page-header">
+                    <h1>Dashboard</h1>
+                    <p>Welcome back! Here's what's happening with your store today.</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="total-revenue">Rp 0</h3>
+                            <p>Total Revenue</p>
+                            <span class="stat-change positive">+12.5%</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="total-orders">0</h3>
+                            <p>Total Orders</p>
+                            <span class="stat-change positive">+8.2%</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="total-customers">0</h3>
+                            <p>Total Customers</p>
+                            <span class="stat-change positive">+15.3%</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="total-products">0</h3>
+                            <p>Total Products</p>
+                            <span class="stat-change neutral">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h2>Recent Orders</h2>
+                        <div class="recent-orders" id="recent-orders">
+                            <!-- Recent orders will be loaded by JavaScript -->
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h2>Top Products</h2>
+                        <div class="top-products" id="top-products">
+                            <!-- Top products will be loaded by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Tab -->
+            <div class="tab-content" id="products-tab">
+                <div class="page-header">
+                    <h1>Products Management</h1>
+                    <button class="btn btn-primary" onclick="showAddProductModal()">
+                        <i class="fas fa-plus"></i> Add Product
+                    </button>
+                </div>
+
+                <div class="table-container">
+                    <div class="table-filters">
+                        <input type="text" id="product-search" placeholder="Search products...">
+                        <select id="category-filter">
+                            <option value="all">All Categories</option>
+                            <option value="basketball">Basketball</option>
+                            <option value="lifestyle">Lifestyle</option>
+                            <option value="running">Running</option>
+                        </select>
+                    </div>
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Stock</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="products-table-body">
+                            <!-- Products will be loaded by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Orders Tab -->
+            <div class="tab-content" id="orders-tab">
+                <div class="page-header">
+                    <h1>Orders Management</h1>
+                </div>
+
+                <div class="table-container">
+                    <div class="table-filters">
+                        <input type="text" id="order-search" placeholder="Search orders...">
+                        <select id="order-status-filter">
+                            <option value="all">All Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="processing">Processing</option>
+                            <option value="shipped">Shipped</option>
+                            <option value="delivered">Delivered</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Date</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orders-table-body">
+                            <!-- Orders will be loaded by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Customers Tab -->
+            <div class="tab-content" id="customers-tab">
+                <div class="page-header">
+                    <h1>Customers Management</h1>
+                </div>
+
+                <div class="table-container">
+                    <div class="table-filters">
+                        <input type="text" id="customer-search" placeholder="Search customers...">
+                    </div>
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Orders</th>
+                                <th>Total Spent</th>
+                                <th>Joined</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customers-table-body">
+                            <!-- Customers will be loaded by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Articles Tab -->
+            <div class="tab-content" id="articles-tab">
+                <div class="page-header">
+                    <h1>Articles Management</h1>
+                    <button class="btn btn-primary" onclick="showAddArticleModal()">
+                        <i class="fas fa-plus"></i> Add Article
+                    </button>
+                </div>
+
+                <div class="table-container">
+                    <div class="table-filters">
+                        <input type="text" id="article-search" placeholder="Search articles...">
+                        <select id="article-category-filter">
+                            <option value="all">All Categories</option>
+                            <option value="history">History</option>
+                            <option value="care">Care & Maintenance</option>
+                            <option value="releases">New Releases</option>
+                            <option value="trends">Trends</option>
+                            <option value="reviews">Reviews</option>
+                        </select>
+                    </div>
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Author</th>
+                                <th>Published</th>
+                                <th>Views</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="articles-table-body">
+                            <!-- Articles will be loaded by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Analytics Tab -->
+            <div class="tab-content" id="analytics-tab">
+                <div class="page-header">
+                    <h1>Analytics</h1>
+                </div>
+
+                <div class="analytics-grid">
+                    <div class="chart-card">
+                        <h3>Sales Overview</h3>
+                        <div class="chart-placeholder">
+                            <i class="fas fa-chart-line"></i>
+                            <p>Sales chart would be displayed here</p>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Top Categories</h3>
+                        <div class="chart-placeholder">
+                            <i class="fas fa-chart-pie"></i>
+                            <p>Category chart would be displayed here</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div class="tab-content" id="settings-tab">
+                <div class="page-header">
+                    <h1>Settings</h1>
+                </div>
+
+                <div class="settings-grid">
+                    <div class="settings-card">
+                        <h3>General Settings</h3>
+                        <form id="general-settings-form">
+                            <div class="form-group">
+                                <label for="site-name">Site Name</label>
+                                <input type="text" id="site-name" value="WSKICKS">
+                            </div>
+                            <div class="form-group">
+                                <label for="site-description">Site Description</label>
+                                <textarea id="site-description">Premium sneaker store</textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </form>
+                    </div>
+                    <div class="settings-card">
+                        <h3>Email Settings</h3>
+                        <form id="email-settings-form">
+                            <div class="form-group">
+                                <label for="smtp-host">SMTP Host</label>
+                                <input type="text" id="smtp-host">
+                            </div>
+                            <div class="form-group">
+                                <label for="smtp-port">SMTP Port</label>
+                                <input type="number" id="smtp-port">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="main.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

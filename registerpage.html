@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shoes Store - Register</title>
+    <link rel="stylesheet" href="styleregister.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">WSKicks</div>
+            <div class="search-bar">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLXNlYXJjaCI+PGNpcmNsZSBjeD0iMTEiIGN5PSIxMSIgcj0iOCIvPjxwYXRoIGQ9Im0yMSAyMS00LjMtNC4zIi8+PC9zdmc+" alt="Search" width="16" height="16">
+                <input type="text" placeholder="Type any products here">
+            </div>
+            <div class="nav-links">
+                <a href="loginpage.html">Login</a>
+                <a href="registerpage.html">Register</a>
+            </div>
+        </nav>
+    </header>
+    
+    <main>
+        <div class="register-container">
+            <div class="register-image">
+                <img src="img/jacktravis.png" alt="Shoes Shopping Illustration">
+            </div>
+            <div class="register-form">
+                <h1>Register</h1>
+                <p>Already have an account? <a href="loginpage.html" style="color: #4CAF50;">Login here</a></p>
+                
+                <!-- Pesan error untuk register gagal -->
+                <div id="error-message" class="error-message" style="display: none;">
+                    <p style="color: red; background-color: #ffebee; padding: 10px; border-radius: 4px; margin-bottom: 15px;">
+                        <span id="error-text">Terjadi kesalahan saat registrasi.</span>
+                    </p>
+                </div>
+                
+                <!-- Pesan loading -->
+                <div id="loading-message" class="loading-message" style="display: none;">
+                    <p style="color: #2196F3; background-color: #e3f2fd; padding: 10px; border-radius: 4px; margin-bottom: 15px;">
+                        Sedang memproses registrasi...
+                    </p>
+                </div>
+                
+                <form id="registerForm">
+                    <div class="form-group">
+                        <input type="email" id="email" placeholder="Email Address" required>
+                    </div>
+                    
+                    <div class="form-group phone-input">
+                        <div class="country-code">
+                            <select id="countryCode">
+                                <option value="+62">+62</option>
+                                <option value="+1">+1</option>
+                                <option value="+44">+44</option>
+                                <option value="+81">+81</option>
+                                <option value="+86">+86</option>
+                            </select>
+                        </div>
+                        <div class="phone-number">
+                            <input type="tel" id="phoneNumber" placeholder="Phone Number" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group password-field">
+                        <input type="password" id="password" placeholder="Password" required>
+                        <span class="password-toggle" onclick="togglePassword('password', this)">👁️</span>
+                    </div>
+
+                    <div class="form-group password-field">
+                        <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+                        <span class="password-toggle" onclick="togglePassword('confirmPassword', this)">👁️</span>
+                    </div>
+                    
+                    <div class="terms">
+                        <input type="checkbox" id="agreeTerms" required>
+                        <label for="agreeTerms">
+                            By registering, I agree to Kick Avenue's <a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="register-btn" id="registerBtn">Register</button>
+                </form>
+                
+                <div class="data-protection">
+                    Your data will be protected and will not be shared
+                </div>
+            </div>
+        </div>
+        
+        <div class="promo-text">
+            <p>What are you waiting for?</p>
+            <p>Immerse yourself in the latest trend in fashion.</p>
+        </div>
+    </main>
+
+    <script>
+        // Fungsi untuk toggle password visibility
+        function togglePassword(inputId, toggleIcon) {
+            const input = document.getElementById(inputId);
+            const isPassword = input.type === "password";
+            input.type = isPassword ? "text" : "password";
+            toggleIcon.textContent = isPassword ? "🙈" : "👁️";
+        }
+
+        // Simulasi database untuk menyimpan user terdaftar
+        let registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [
+            { email: "admin@wskicks.com", phone: "+6281234567890" },
+            { email: "user@gmail.com", phone: "+6289876543210" }
+        ];
+
+        // Fungsi untuk menampilkan pesan
+        function showMessage(type, message = '', show = true) {
+            const errorMsg = document.getElementById('error-message');
+            const loadingMsg = document.getElementById('loading-message');
+            const errorText = document.getElementById('error-text');
+            
+            // Sembunyikan semua pesan
+            errorMsg.style.display = 'none';
+            loadingMsg.style.display = 'none';
+            
+            if (show) {
+                if (type === 'error') {
+                    errorText.textContent = message;
+                    errorMsg.style.display = 'block';
+                } else if (type === 'loading') {
+                    loadingMsg.style.display = 'block';
+                }
+            }
+        }
+
+        // Fungsi untuk validasi email
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Fungsi untuk validasi phone number
+        function isValidPhone(phone) {
+            const phoneRegex = /^[0-9]{8,15}$/;
+            return phoneRegex.test(phone);
+        }
+
+        // Fungsi untuk validasi password
+        function isValidPassword(password) {
+            // Password minimal 6 karakter
+            return password.length >= 6;
+        }
+
+        // Fungsi untuk cek apakah email sudah terdaftar
+        function isEmailRegistered(email) {
+            return registeredUsers.some(user => user.email.toLowerCase() === email.toLowerCase());
+        }
+
+        // Fungsi untuk redirect ke login page
+        function redirectToLoginPage() {
+            // Simpan pesan sukses untuk ditampilkan di login page
+            sessionStorage.setItem('registrationSuccess', 'true');
+            sessionStorage.setItem('registrationMessage', 'Registrasi berhasil! Silakan login dengan akun baru Anda.');
+            
+            // Redirect ke login page
+            window.location.href = 'loginpage.html';
+        }
+
+        // Fungsi untuk validasi form registrasi
+        function validateRegistrationForm(email, phone, password, confirmPassword, agreeTerms) {
+            // Validasi email
+            if (!isValidEmail(email)) {
+                return { valid: false, message: 'Format email tidak valid.' };
+            }
+
+            // Cek apakah email sudah terdaftar
+            if (isEmailRegistered(email)) {
+                return { valid: false, message: 'Email sudah terdaftar. Gunakan email lain atau login.' };
+            }
+
+            // Validasi phone number
+            if (!isValidPhone(phone)) {
+                return { valid: false, message: 'Nomor telepon harus 8-15 digit angka.' };
+            }
+
+            // Validasi password
+            if (!isValidPassword(password)) {
+                return { valid: false, message: 'Password minimal 6 karakter.' };
+            }
+
+            // Validasi confirm password
+            if (password !== confirmPassword) {
+                return { valid: false, message: 'Password dan konfirmasi password tidak sama.' };
+            }
+
+            // Validasi terms and conditions
+            if (!agreeTerms) {
+                return { valid: false, message: 'Anda harus menyetujui Terms and Conditions.' };
+            }
+
+            return { valid: true };
+        }
+
+        // Fungsi untuk menyimpan user baru
+        function saveNewUser(email, countryCode, phone, password) {
+            const newUser = {
+                email: email,
+                phone: countryCode + phone,
+                password: password, // Dalam aplikasi nyata, password harus di-hash
+                registrationDate: new Date().toISOString()
+            };
+
+            registeredUsers.push(newUser);
+            localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+            
+            // Simpan juga untuk login validation di halaman login
+            let validUsers = JSON.parse(localStorage.getItem('validUsers')) || [];
+            validUsers.push({
+                email: email,
+                password: password
+            });
+            localStorage.setItem('validUsers', JSON.stringify(validUsers));
+        }
+
+        // Event listener untuk form registrasi
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Mencegah form submit default
+            
+            const email = document.getElementById('email').value.trim();
+            const countryCode = document.getElementById('countryCode').value;
+            const phone = document.getElementById('phoneNumber').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const agreeTerms = document.getElementById('agreeTerms').checked;
+            const registerBtn = document.getElementById('registerBtn');
+            
+            // Validasi form
+            const validation = validateRegistrationForm(email, phone, password, confirmPassword, agreeTerms);
+            
+            if (!validation.valid) {
+                showMessage('error', validation.message);
+                return;
+            }
+            
+            // Tampilkan loading
+            showMessage('loading');
+            registerBtn.disabled = true;
+            registerBtn.textContent = 'Registering...';
+            
+            // Simulasi proses registrasi (dalam aplikasi nyata, ini akan mengirim request ke server)
+            setTimeout(() => {
+                try {
+                    // Simpan user baru
+                    saveNewUser(email, countryCode, phone, password);
+                    
+                    // Sembunyikan loading
+                    showMessage('loading', '', false);
+                    
+                    // Tampilkan pesan sukses
+                    const successMsg = document.createElement('div');
+                    successMsg.innerHTML = '<p style="color: green; background-color: #e8f5e8; padding: 10px; border-radius: 4px; margin-bottom: 15px;">Registrasi berhasil! Mengalihkan ke halaman login...</p>';
+                    document.querySelector('.register-form').insertBefore(successMsg, document.getElementById('registerForm'));
+                    
+                    // Redirect ke login page setelah 2 detik
+                    setTimeout(() => {
+                        redirectToLoginPage();
+                    }, 2000);
+                    
+                } catch (error) {
+                    // Jika terjadi error
+                    showMessage('error', 'Terjadi kesalahan saat registrasi. Silakan coba lagi.');
+                    registerBtn.disabled = false;
+                    registerBtn.textContent = 'Register';
+                }
+            }, 1500); // Simulasi delay 1.5 detik
+        });
+
+        // Validasi real-time untuk email
+        document.getElementById('email').addEventListener('blur', function() {
+            const email = this.value.trim();
+            if (email && !isValidEmail(email)) {
+                showMessage('error', 'Format email tidak valid.');
+            } else if (email && isEmailRegistered(email)) {
+                showMessage('error', 'Email sudah terdaftar. Gunakan email lain.');
+            } else {
+                showMessage('error', '', false);
+            }
+        });
+
+        // Validasi real-time untuk phone number
+        document.getElementById('phoneNumber').addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, ''); // Hanya angka
+        });
+
+        // Validasi real-time untuk confirm password
+        document.getElementById('confirmPassword').addEventListener('blur', function() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = this.value;
+            
+            if (confirmPassword && password !== confirmPassword) {
+                showMessage('error', 'Password dan konfirmasi password tidak sama.');
+            } else {
+                showMessage('error', '', false);
+            }
+        });
+
+        // Style untuk checkbox terms
+        document.addEventListener('DOMContentLoaded', function() {
+            const termsDiv = document.querySelector('.terms');
+            termsDiv.style.display = 'flex';
+            termsDiv.style.alignItems = 'flex-start';
+            termsDiv.style.gap = '8px';
+            termsDiv.style.fontSize = '14px';
+            termsDiv.style.lineHeight = '1.4';
+            
+            const checkbox = document.getElementById('agreeTerms');
+            checkbox.style.marginTop = '2px';
+            
+            const label = document.querySelector('label[for="agreeTerms"]');
+            label.style.flex = '1';
+            label.style.cursor = 'pointer';
+        });
+    </script>
+</body>
+</html>

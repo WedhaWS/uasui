@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tren Sepatu 2025</title>
+  <link rel="stylesheet" href="styleblog.css"/>
+</head>
+<body>
+  <header>
+    <h1>WSKicks Blog</h1>
+    <nav>
+      <button onclick="filterShoes('all')">Semua</button>
+      <button onclick="filterShoes('sneakers')">Sneakers</button>
+      <button onclick="filterShoes('boots')">Boots</button>
+      <button onclick="filterShoes('running')">Running</button>
+    </nav>
+  </header>
+
+  <main id="blog-container">
+    <article class="blog-item sneakers" onclick="goToDetail(1)">
+      <img src="img/olahragapadel.jpg" alt="Sneakers 1">
+      <h2>REKOMENDASI SEPATU OLAHRAGA PADEL YANG SEDANG TREN</h2>
+      <p>Olahraga padel semakin populer di berbagai kalangan, terutama karena perpaduan antara tenis dan squash yang membuatnya seru dan menantang. Seiring meningkatnya minat terhadap olahraga ini,</p>
+    </article>
+
+    <article class="blog-item boots" onclick="goToDetail(2)">
+      <img src="img/adidasblog.jpeg" alt="Boots 1">
+      <h2>ADIDAS HANDBALL SPEZIAL: CASUAL YANG MODERN</h2>
+      <p>Awalnya dirancang sebagai sepatu untuk olahraga handball pada tahun 1979, Adidas Handball Spezial kini menjelma menjadi salah satu ikon gaya streetwear</p>
+    </article>
+
+    <article class="blog-item running" onclick="goToDetail(3)">
+      <img src="img/kobeblog.jpg" alt="Running Shoes 1">
+      <h2>SEPATU KOBE 5 PROTO: IKON KECANGGIHAN DAN WARISAN MEREK KOBE BRYANT</h2>
+      <p>Kobe Bryant bukan hanya legenda di lapangan basket, tetapi juga ikon dalam dunia sepatu olahraga. Salah satu warisan terbesarnya adalah</p>
+    </article>
+
+    <article class="blog-item sneakers" onclick="goToDetail(4)">
+      <img src="img/nikeairmax.jpg" alt="Sneakers 2">
+      <h2>SNEAKERS CASUAL UNTUK FASHION DAN JUGA BISA DI PAKAI OLAHRAGA</h2>
+      <p>Di era modern ini, batas antara sepatu olahraga dan sepatu fashion semakin kabur. Banyak brand ternama kini merancang sneakers multifungsiyang tak hanya nyaman digunakan untuk berolahraga ringan,</p>
+    </article>
+  </main>
+
+  <script>
+    function filterShoes(category) {
+      const items = document.querySelectorAll(".blog-item");
+      items.forEach(item => {
+        if (category === 'all') {
+          item.style.display = 'block';
+        } else {
+          item.style.display = item.classList.contains(category) ? 'block' : 'none';
+        }
+      });
+    }
+
+    function goToDetail(id) {
+      window.location.href = `detailblog.html?id=${id}`;
+    }
+    
+  </script>
+</body>
+</html>

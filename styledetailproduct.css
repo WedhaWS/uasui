@@ -1,0 +1,380 @@
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            line-height: 1.6;
+        }
+
+        .header {
+            background-color: white;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .search-bar {
+            flex: 1;
+            margin: 0 2rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .auth-btn {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .nav-menu {
+            background-color: white;
+            padding: 0.5rem 0;
+        }
+
+        .nav-menu-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-items {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-item {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+        }
+
+        .nav-item.active {
+            color: #ff4d4f;
+            border-bottom: 2px solid #ff4d4f;
+        }
+
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 1rem auto;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .breadcrumb a {
+            color: #666;
+            text-decoration: none;
+        }
+
+        .product-detail {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: flex;
+            gap: 2rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .image-section {
+            flex: 1;
+            position: relative;
+        }
+
+        .main-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: contain;
+        }
+
+        .image-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+        }
+
+        .image-nav.prev {
+            left: 0;
+        }
+
+        .image-nav.next {
+            right: 0;
+        }
+
+        .image-thumbs {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .thumb {
+            width: 10px;
+            height: 10px;
+            background: #ddd;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .thumb.active {
+            background: #666;
+        }
+
+        .info-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .hot-label {
+            background: #ff4d4f;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            width: fit-content;
+            font-size: 0.8rem;
+        }
+
+        .product-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .price {
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #999;
+            margin-left: 0.5rem;
+        }
+
+        .condition-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .condition-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            background: #f5f5f5;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .condition-btn.active {
+            background: #333;
+            color: white;
+            border-color: #333;
+        }
+
+        .size-chart {
+            color: #666;
+            text-decoration: underline;
+            font-size: 0.9rem;
+            text-align: right;
+        }
+
+        .size-warning {
+            font-size: 0.9rem;
+            color: #666;
+            margin: 1rem 0;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .quantity-btn {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            background: #f5f5f5;
+            cursor: pointer;
+        }
+
+        .quantity {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            border-left: none;
+            border-right: none;
+        }
+
+        .description {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .delivery {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        .share-section {
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .share-text {
+            font-size: 0.9rem;
+            color: #333;
+        }
+
+        .share-icons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .share-icon {
+            width: 24px;
+            height: 24px;
+            background: #ddd;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .product-detail {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            .image-section, .info-section {
+                width: 100%;
+            }
+
+            .main-image {
+                max-height: 300px;
+            }
+
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .search-bar {
+                margin: 0;
+                width: 100%;
+            }
+
+            .nav-items {
+                flex-wrap: wrap;
+            }
+        }
+
+        .add-to-cart-btn {
+                margin-top: 20px;
+                padding: 10px 20px;
+                background-color: black;
+                color: white;
+                border: none;
+                border-radius: 8px;
+                font-size: 16px;
+                cursor: pointer;
+                transition: 0.2s ease;
+        }
+
+        .add-to-cart-btn:hover {
+                background-color: #333;
+        }   
+
+        .size-chart-toggle {
+                color: #000000;
+                text-decoration: underline;
+                cursor: pointer;
+                font-weight: 600;
+                margin-bottom: 10px;
+                display: inline-block;
+        }
+
+        .size-chart-table {
+                margin-top: 10px;
+                overflow-x: auto;
+        }
+
+.size-chart-table table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #f9f9f9;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.size-chart-table th,
+.size-chart-table td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+  font-size: 0.95rem;
+}
+
+.size-chart-table th {
+  background-color: #333;
+  color: white;
+}
+
+.size-btn {
+  padding: 8px 14px;
+  margin: 5px 8px 5px 0;
+  border: 1px solid #aaa;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #fff;
+  transition: 0.3s;
+}
+
+.size-btn:hover {
+  background: #eee;
+}
+
+.size-btn.active {
+  background: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+

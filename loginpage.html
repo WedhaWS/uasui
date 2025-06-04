@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shoes Store - Login</title>
+    <link rel="stylesheet" href="stylelogin.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">WSKicks</div>
+            <div class="search-bar">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLXNlYXJjaCI+PGNpcmNsZSBjeD0iMTEiIGN5PSIxMSIgcj0iOCIvPjxwYXRoIGQ9Im0yMSAyMS00LjMtNC4zIi8+PC9zdmc+" alt="Search" width="16" height="16">
+                <input type="text" placeholder="Type any products here">
+            </div>
+            <div class="nav-links">
+                <a href="loginpage.html">Login</a>
+                <a href="registerpage.html">Register</a>
+            </div>
+        </nav>
+    </header>
+    
+    <main>
+        <div class="login-container">
+            <div class="login-image">
+                <img src="img/jacktravis.png" alt="Shoes Shopping Illustration">
+            </div>
+            <div class="login-form">
+                <h1>Login</h1>
+                <p>Don't have an account? <a href="#">Sign up here</a></p>
+                
+                <!-- Pesan error untuk login gagal -->
+                <div id="error-message" class="error-message" style="display: none;">
+                    <p style="color: red; background-color: #ffebee; padding: 10px; border-radius: 4px; margin-bottom: 15px;">
+                        Email atau password salah. Silakan coba lagi.
+                    </p>
+                </div>
+                
+                <!-- Pesan loading -->
+                <div id="loading-message" class="loading-message" style="display: none;">
+                    <p style="color: #2196F3; background-color: #e3f2fd; padding: 10px; border-radius: 4px; margin-bottom: 15px;">
+                        Sedang memproses login...
+                    </p>
+                </div>
+                
+                <form id="loginForm">
+                    <div class="form-group">
+                        <input type="email" id="email" placeholder="Email Address" required>
+                    </div>
+                    <div class="form-group password-field">
+                        <input type="password" id="loginPassword" placeholder="Password" required>
+                        <span class="password-toggle" onclick="togglePassword('loginPassword', this)">👁️</span>
+                    </div>
+                    <button type="submit" class="login-btn" id="loginBtn">Login</button>
+                </form>
+                
+                <div class="forgot-password">
+                    <a href="#">Forgot password?</a>
+                </div>
+                
+                <div class="social-login">
+                    <p>Login instantly using your social media</p>
+                    <div class="social-icons">
+                        <div class="social-icon" onclick="socialLogin('facebook')">
+                            <img src="img/facebooklogo.jpg" alt="Facebook" width="20" height="20">
+                            <span>Facebook</span>
+                        </div>
+                        <div class="social-icon" onclick="socialLogin('google')">
+                            <img src="img/googlelogo.jpg" alt="Google" width="20" height="20">
+                            <span>Google</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="promo-text">
+            <p>What are you waiting for?</p>
+            <p>Immerse yourself in the latest trend in fashion</p>
+        </div>
+    </main>
+
+    <script>
+        // Fungsi untuk toggle password visibility
+        function togglePassword(inputId, toggleIcon) {
+            const input = document.getElementById(inputId);
+            const isPassword = input.type === "password";
+            input.type = isPassword ? "text" : "password";
+            toggleIcon.textContent = isPassword ? "🙈" : "👁️";
+        }
+
+        // Data user untuk simulasi (dalam aplikasi nyata, ini harus dari server/database)
+        const validUsers = [
+            { email: "admin@wskicks.com", password: "admin123" },
+            { email: "user@gmail.com", password: "password123" },
+            { email: "test@test.com", password: "test123" }
+        ];
+
+        // Fungsi untuk menampilkan pesan
+        function showMessage(type, show = true) {
+            const errorMsg = document.getElementById('error-message');
+            const loadingMsg = document.getElementById('loading-message');
+            
+            // Sembunyikan semua pesan
+            errorMsg.style.display = 'none';
+            loadingMsg.style.display = 'none';
+            
+            if (show) {
+                if (type === 'error') {
+                    errorMsg.style.display = 'block';
+                } else if (type === 'loading') {
+                    loadingMsg.style.display = 'block';
+                }
+            }
+        }
+
+        // Fungsi untuk redirect ke landing page
+        function redirectToLandingPage() {
+            // Simpan status login
+            sessionStorage.setItem('isLoggedIn', 'true');
+            sessionStorage.setItem('loginTime', new Date().toISOString());
+            
+            // Redirect ke landing page (ganti dengan URL yang sesuai)
+            window.location.href = 'landingpage.html';
+            
+            // Atau jika ingin membuka di tab baru:
+            // window.open('landingpage.html', '_blank');
+        }
+
+        // Fungsi untuk validasi login
+        function validateLogin(email, password) {
+            return validUsers.some(user => 
+                user.email === email && user.password === password
+            );
+        }
+
+        // Event listener untuk form login
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Mencegah form submit default
+            
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const loginBtn = document.getElementById('loginBtn');
+            
+            // Validasi input kosong
+            if (!email || !password) {
+                showMessage('error');
+                document.querySelector('#error-message p').textContent = 'Email dan password harus diisi.';
+                return;
+            }
+            
+            // Tampilkan loading
+            showMessage('loading');
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'Logging in...';
+            
+            // Simulasi proses login (dalam aplikasi nyata, ini akan mengirim request ke server)
+            setTimeout(() => {
+                if (validateLogin(email, password)) {
+                    // Login berhasil
+                    showMessage('loading', false);
+                    
+                    // Tampilkan pesan sukses sebentar
+                    const successMsg = document.createElement('div');
+                    successMsg.innerHTML = '<p style="color: green; background-color: #e8f5e8; padding: 10px; border-radius: 4px; margin-bottom: 15px;">Login berhasil! Mengalihkan ke halaman utama...</p>';
+                    document.querySelector('.login-form').insertBefore(successMsg, document.getElementById('loginForm'));
+                    
+                    // Redirect setelah 1.5 detik
+                    setTimeout(() => {
+                        redirectToLandingPage();
+                    }, 1500);
+                    
+                } else {
+                    // Login gagal
+                    showMessage('error');
+                    loginBtn.disabled = false;
+                    loginBtn.textContent = 'Login';
+                }
+            }, 1000); // Simulasi delay 1 detik
+        });
+
+        // Fungsi untuk social login
+        function socialLogin(platform) {
+            const loginBtn = document.getElementById('loginBtn');
+            
+            showMessage('loading');
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'Logging in...';
+            
+            // Simulasi social login
+            setTimeout(() => {
+                showMessage('loading', false);
+                
+                // Tampilkan pesan sukses
+                const successMsg = document.createElement('div');
+                successMsg.innerHTML = `<p style="color: green; background-color: #e8f5e8; padding: 10px; border-radius: 4px; margin-bottom: 15px;">Login dengan ${platform} berhasil! Mengalihkan ke halaman utama...</p>`;
+                document.querySelector('.login-form').insertBefore(successMsg, document.getElementById('loginForm'));
+                
+                // Redirect setelah 1.5 detik
+                setTimeout(() => {
+                    redirectToLandingPage();
+                }, 1500);
+                
+            }, 1000);
+        }
+
+        // Cek apakah user sudah login sebelumnya
+        window.addEventListener('load', function() {
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+            if (isLoggedIn === 'true') {
+                // Jika sudah login, bisa redirect langsung atau tampilkan pesan
+                console.log('User sudah login sebelumnya');
+                // Uncomment line berikut jika ingin auto-redirect user yang sudah login:
+                // redirectToLandingPage();
+            }
+        });
+
+        // CSS untuk social icons agar bisa diklik
+        document.addEventListener('DOMContentLoaded', function() {
+            const socialIcons = document.querySelectorAll('.social-icon');
+            socialIcons.forEach(icon => {
+                icon.style.cursor = 'pointer';
+                icon.style.transition = 'transform 0.2s';
+                
+                icon.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.05)';
+                });
+                
+                icon.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

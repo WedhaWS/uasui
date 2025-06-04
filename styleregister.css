@@ -1,0 +1,202 @@
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f8f8;
+        }
+        
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 30px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            font-weight: bold;
+            font-size: 24px;
+            text-transform: uppercase;
+        }
+        
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: #f0f0f0;
+            border-radius: 20px;
+            padding: 8px 15px;
+            width: 50%;
+        }
+        
+        .search-bar input {
+            border: none;
+            background-color: transparent;
+            width: 100%;
+            padding: 5px;
+            outline: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+        }
+        
+        .menu-categories {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 15px 0;
+            background-color: white;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .menu-categories a {
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+        }
+        
+        .register-container {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        
+        .register-image {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .register-image img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .register-form {
+            flex: 1;
+            padding: 20px;
+        }
+        
+        .register-form h1 {
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .register-form p {
+            margin-bottom: 20px;
+            color: #555;
+        }
+        
+        .register-form p a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        .phone-input {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .country-code {
+            width: 100px;
+            position: relative;
+        }
+        
+        .country-code select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+        }
+        
+        .phone-number {
+            flex: 1;
+        }
+        
+        .password-field {
+            position: relative;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #999;
+        }
+        
+        .terms {
+            margin: 20px 0;
+            font-size: 14px;
+            color: #555;
+        }
+        
+        .terms a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        
+        .register-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 30px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        
+        .data-protection {
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            margin-top: 20px;
+        }
+        
+        .promo-text {
+            text-align: center;
+            margin: 50px 0;
+            color: #333;
+            font-size: 18px;
+        }
+        
+        .promo-text p:first-child {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    

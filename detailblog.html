@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Detail Artikel Sepatu</title>
+  <link rel="stylesheet" href="styledetailblog.css" />
+</head>
+<body>
+  <header>
+    <h1>Detail Artikel</h1>
+  </header>
+
+  <main id="detail-container">
+    <p>Memuat artikel...</p>
+  </main>
+
+  <script>
+    // Ambil ID dari URL
+const params = new URLSearchParams(window.location.search);
+const articleId = params.get("id");
+
+// Data artikel (nanti bisa diganti ke backend)
+const articles = {
+  1: {
+  title: "REKOMENDASI SEPATU OLAHRAGA PADEL YANG SEDANG TREN",
+  image: "img/olahragapadel.jpg",
+  content: `
+    <h2>REKOMENDASI SEPATU OLAHRAGA PADEL YANG SEDANG TREN</h2>
+    <p>Olahraga padel semakin populer di berbagai kalangan, terutama karena perpaduan antara tenis dan squash yang membuatnya seru dan menantang. Seiring meningkatnya minat terhadap olahraga ini, kebutuhan akan perlengkapan yang mendukung performa pun ikut meningkat—terutama sepatu. Sepatu padel yang tepat tak hanya meningkatkan performa, tapi juga mengurangi risiko cedera. Berikut ini adalah rekomendasi sepatu olahraga padel yang sedang tren dan banyak digunakan oleh pemain profesional maupun amatir.</p>
+
+    <h3>1. Adidas Adizero Ubersonic 4 Padel</h3>
+    <p>Sepatu ini menjadi favorit banyak pemain karena bobotnya yang ringan dan desain yang aerodinamis. Dilengkapi dengan teknologi Lightstrike, Adizero Ubersonic 4 memberikan responsivitas yang tinggi saat bergerak cepat ke segala arah. Outsole-nya juga didesain khusus untuk grip optimal di lapangan padel.</p>
+
+    <h3>2. Babolat Jet Premura 2</h3>
+    <p>Dirancang khusus untuk olahraga padel, Babolat Jet Premura 2 memberikan kenyamanan maksimal dan stabilitas yang luar biasa. Sepatu ini dilengkapi dengan sistem KPRSX untuk perlindungan tumit serta mesh yang ringan dan tahan lama. Cocok untuk pemain yang sering melakukan manuver tajam dan eksplosif.</p>
+
+    <h3>3. Asics Gel-Padel Pro 5</h3>
+    <p>Pilihan ekonomis namun tetap berkualitas tinggi. Asics Gel-Padel Pro 5 memiliki bantalan GEL yang khas untuk menyerap guncangan serta upper berbahan mesh sintetis untuk sirkulasi udara yang baik. Ideal untuk pemula hingga pemain menengah yang ingin kombinasi antara kenyamanan dan harga terjangkau.</p>
+
+    <h3>4. Nike Air Zoom Vapor Cage 4</h3>
+    <p>Meskipun awalnya dirancang untuk tenis, banyak pemain padel profesional yang memilih sepatu ini karena daya tahan dan cengkeramannya yang sangat baik. Dengan teknologi Zoom Air dan desain yang memperkuat bagian sol serta sisi luar, sepatu ini cocok untuk permainan agresif dan intens.</p>
+
+    <h3>5. Bullpadel Hack Hybrid Fly</h3>
+    <p>Didesain dengan masukan dari pemain profesional, sepatu ini menawarkan keseimbangan sempurna antara kecepatan, fleksibilitas, dan stabilitas. Teknologi SoleShield-nya memberikan perlindungan ekstra saat melakukan sliding di lapangan padel yang berpasir.</p>
+
+    <h3>Tips Memilih Sepatu Padel</h3>
+    <ul>
+      <li><strong>Pilih Sol yang Cocok:</strong> Lapangan padel umumnya menggunakan pasir halus, jadi pilih sepatu dengan outsole herringbone (zig-zag) untuk grip terbaik.</li>
+      <li><strong>Perhatikan Bantalan dan Dukungan:</strong> Sepatu dengan bantalan yang baik membantu mengurangi beban pada sendi dan mencegah cedera.</li>
+      <li><strong>Kenyamanan Adalah Kunci:</strong> Coba sepatu dan pastikan tidak terlalu ketat atau longgar. Gunakan kaus kaki olahraga saat mencobanya.</li>
+      <li><strong>Pertimbangkan Gaya Bermain:</strong> Pemain yang agresif membutuhkan sepatu dengan perlindungan ekstra di sisi luar dan tumit.</li>
+    </ul>
+
+    <p>Dengan sepatu yang tepat, performa bermain padel bisa meningkat signifikan dan pengalaman bermain pun jadi lebih menyenangkan. Jadi, mana dari kelima rekomendasi di atas yang akan kamu coba?</p>
+  `
+},
+
+  2: {
+  title: "ADIDAS HANDBALL SPEZIAL: CASUAL YANG MODERN",
+  image: "img/adidasblog.jpeg",
+  content: `
+    <h2>ADIDAS HANDBALL SPEZIAL: CASUAL YANG MODERN</h2>
+    <p>Awalnya dirancang sebagai sepatu untuk olahraga handball pada tahun 1979, <strong>Adidas Handball Spezial</strong> kini menjelma menjadi salah satu ikon gaya streetwear yang digemari di seluruh dunia. Dengan desain retro yang khas dan kenyamanan yang tinggi, sepatu ini menjadi pilihan sempurna bagi mereka yang mencari tampilan casual namun tetap modern.</p>
+
+    <h3>Desain Klasik yang Tetap Relevan</h3>
+    <p>Adidas Handball Spezial mempertahankan siluet klasik dengan bahan suede premium dan outsole berbahan gum yang memberikan kesan vintage. Logo "SPEZIAL" berwarna emas di sisi sepatu menambahkan sentuhan otentik yang menjadi ciri khas model ini.</p>
+
+    <h3>Kenyamanan Sehari-hari</h3>
+    <p>Tak hanya tampak keren, sepatu ini juga dirancang dengan mempertimbangkan kenyamanan. Bantalan dalamnya empuk dan pas di kaki, membuatnya ideal untuk dipakai sepanjang hari—baik untuk jalan-jalan santai, nongkrong, hingga bekerja dengan gaya smart-casual.</p>
+
+    <h3>Warna-Warna yang Stylish</h3>
+    <p>Adidas Handball Spezial hadir dalam berbagai varian warna yang menarik, mulai dari biru navy klasik, abu-abu netral, hingga kombinasi warna yang lebih berani. Semua varian tetap mempertahankan ciri khas desain Spezials yang elegan dan tak lekang oleh waktu.</p>
+
+    <h3>Mudah Dipadukan dengan Outfit</h3>
+    <p>Salah satu kekuatan utama sepatu ini adalah kemudahannya dipadukan dengan berbagai gaya pakaian. Cocok dengan celana jeans, chino, jogger, bahkan celana pendek. Inilah alasan mengapa banyak fashion enthusiast menjadikannya item wajib di lemari mereka.</p>
+
+    <p>Jika kamu mencari sepatu yang bisa tampil kasual namun tetap mencuri perhatian dengan nuansa klasik-modern, <strong>Adidas Handball Spezial</strong> adalah pilihan yang tak bisa dilewatkan.</p>
+  `
+},
+
+  3: {
+    title: "SEPATU KOBE 5 PROTO: IKON KECANGGIHAN DAN WARISAN MEREK KOBE BRYANT",
+    image: "img/kobeblog.jpg",
+    content: `
+    <h2>SEPATU KOBE 5 PROTRO: IKON KECANGGIHAN DAN WARISAN MEREK KOBE BRYANT</h2>
+    <p>Kobe Bryant bukan hanya legenda di lapangan basket, tetapi juga ikon dalam dunia sepatu olahraga. Salah satu warisan terbesarnya adalah lini sepatu khasnya bersama Nike, dan <strong>Kobe 5 Protro</strong> menjadi simbol sempurna dari kecanggihan teknologi dan penghormatan terhadap dedikasi mendiang Mamba terhadap permainan.</p>
+
+    <h3>Desain yang Lebih Ringan dan Cepat</h3>
+    <p>Dirilis ulang dalam versi Protro (*Performance Retro*), sepatu ini mempertahankan estetika original Kobe 5 namun dengan peningkatan signifikan pada performa. Upper yang ringan dan ramping memungkinkan gerakan lebih cepat dan responsif di lapangan, sesuai dengan gaya bermain agresif Kobe.</p>
+
+    <h3>Teknologi Modern untuk Performa Maksimal</h3>
+    <p>Kobe 5 Protro dibekali dengan unit Zoom Air yang lebih besar di bagian tumit untuk respons yang lebih baik serta bantalan phylon yang diperbarui demi kenyamanan maksimal. Struktur midsole-nya memberikan stabilitas saat melakukan lompatan atau perubahan arah mendadak.</p>
+
+    <h3>Makna di Balik Desain</h3>
+    <p>Setiap colorway dari Kobe 5 Protro tidak hanya soal estetika, tetapi juga menyimpan makna tersendiri yang berkaitan dengan momen-momen penting dalam karier Kobe. Dari “Chaos” hingga “Big Stage”, setiap pasang membawa cerita dan emosi bagi para penggemar.</p>
+
+    <h3>Daya Tarik di Dalam dan Luar Lapangan</h3>
+    <p>Meski dirancang untuk performa tinggi di lapangan basket, Kobe 5 Protro juga menjadi favorit di kalangan sneakerhead berkat desainnya yang sleek dan futuristik. Banyak yang memadukannya dengan gaya streetwear untuk tampilan yang bold dan penuh statement.</p>
+
+    <p><strong>Kobe 5 Protro</strong> bukan hanya sepatu basket. Ia adalah simbol warisan, semangat kerja keras, dan mentalitas Mamba yang legendaris. Baik kamu pemain basket serius atau sekadar penggemar, sepatu ini adalah cara yang luar biasa untuk terus mengenang dan menghormati Kobe Bryant.</p>
+  `
+},
+  4: {
+    title: "SNEAKERS CASUAL UNTUK FASHION DAN JUGA BISA DI PAKAI OLAHRAGA",
+    image: "img/nikeairmax.jpg",
+    content: `
+    <h2>SNEAKERS CASUAL UNTUK FASHION DAN JUGA BISA DIPAKAI OLAHRAGA</h2>
+    <p>Di era modern ini, batas antara sepatu olahraga dan sepatu fashion semakin kabur. Banyak brand ternama kini merancang <strong>sneakers multifungsi</strong> yang tak hanya nyaman digunakan untuk berolahraga ringan, tapi juga stylish untuk dipadukan dengan outfit harian. Jika kamu mencari sepatu yang bisa diajak jogging tapi tetap keren untuk nongkrong, berikut beberapa rekomendasinya.</p>
+
+    <h3>1. Nike Air Max 270</h3>
+    <p>Dikenal dengan siluetnya yang modern dan bantalan Air Max yang besar di bagian tumit, sepatu ini sangat nyaman untuk aktivitas sehari-hari dan olahraga ringan seperti jalan cepat atau treadmill. Desainnya yang sleek menjadikannya cocok juga dipadukan dengan jeans atau jogger.</p>
+
+    <h3>2. Adidas Ultraboost</h3>
+    <p>Salah satu sneakers paling populer berkat kenyamanannya yang luar biasa. Teknologi Boost pada midsole memberikan responsivitas tinggi dan sangat nyaman untuk jogging. Dengan desain knit yang minimalis, Ultraboost juga terlihat keren untuk tampilan kasual.</p>
+
+    <h3>3. New Balance 327</h3>
+    <p>Sepatu ini hadir dengan desain retro-modern yang mencuri perhatian. Walaupun terlihat seperti sneakers fashion, outsole-nya cukup kokoh untuk aktivitas fisik ringan. Cocok untuk kamu yang ingin tampil unik dan tetap aktif.</p>
+
+    <h3>4. Puma RS-X</h3>
+    <p>Memadukan gaya chunky yang sedang tren dengan teknologi running shoes, RS-X cocok untuk berbagai kegiatan. Cushioning-nya empuk dan bagian upper-nya sangat breathable, menjadikannya pilihan ideal untuk olahraga ringan dan gaya streetwear yang standout.</p>
+
+    <h3>5. On Cloudnova</h3>
+    <p>Brand asal Swiss ini menawarkan sneakers dengan teknologi CloudTec yang nyaman dan ringan. Cloudnova dirancang untuk performa harian sekaligus tampil modis. Kombinasi bahan mesh dan tali elastis membuatnya fleksibel untuk berbagai aktivitas.</p>
+
+    <h3>Tips Memilih Sneakers Multifungsi:</h3>
+    <ul>
+      <li><strong>Perhatikan Sol dan Cushioning:</strong> Pilih yang memiliki bantalan baik agar tetap nyaman saat bergerak aktif.</li>
+      <li><strong>Pilih Desain Netral:</strong> Warna seperti hitam, putih, atau abu-abu mudah dipadukan dengan berbagai outfit.</li>
+      <li><strong>Pastikan Ventilasi Baik:</strong> Upper berbahan mesh atau knit menjaga kaki tetap sejuk saat digunakan lama.</li>
+    </ul>
+
+    <p>Dengan sneakers yang tepat, kamu tak perlu lagi memilih antara gaya dan fungsi. Kini kamu bisa tampil fashionable sekaligus siap bergerak aktif kapan saja!</p>
+  `
+}
+};
+
+// Tampilkan artikel
+const container = document.getElementById("detail-container");
+
+if (articles[articleId]) {
+  const { title, image, content } = articles[articleId];
+  container.innerHTML = `
+    <h2>${title}</h2>
+    <img src="${image}" alt="${title}">
+    <p style="font-size: 1.1rem; line-height: 1.6;">${content}</p>
+    <a href="blog.html" class="back-link">← Kembali ke Beranda</a>
+  `;
+} else {
+  container.innerHTML = "<p>Artikel tidak ditemukan.</p><a href='index.html' class='back-link'>← Kembali</a>";
+}
+
+  </script>
+</body>
+</html>

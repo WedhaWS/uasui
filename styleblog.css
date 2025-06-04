@@ -1,0 +1,77 @@
+ html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f9f9;
+      overflow-x: hidden;
+    }
+
+    header {
+      background: #1f1e1e;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    nav {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    nav button {  
+      background: linear-gradient(135deg, #ff416c, #ff4b2b);
+      color: #fff;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      transition: all 0.3s ease;
+    }
+
+    nav button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+      background: linear-gradient(135deg, #ff4b2b, #ff416c);
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      padding: 2rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .blog-item {
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .blog-item:hover {
+      transform: translateY(-5px);
+    }
+
+    .blog-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .blog-item h2 {
+      margin: 0.5rem 1rem 0 1rem;
+    }
+
+    .blog-item p {
+      margin: 0.5rem 1rem 1rem 1rem;
+      color: #555;
+    }

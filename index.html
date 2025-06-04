@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WSKicks - Sneakers</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">WSKICKS</div>
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="Type any products here" id="searchInput">
+            </div>
+            <div class="auth-buttons">
+                <a href="cart.html" class="auth-btn cart-btn">🛒 Keranjang</a>
+                <a href="loginpage.html" class="auth-btn">Login</a>
+                <a href="registerpage.html" class="auth-btn">Register</a>
+            </div>
+        </div>
+        <nav class="nav-menu">
+            <div class="nav-menu-container">
+                <div class="nav-items">
+                    <div class="nav-item active">Sneakers</div>
+                    <div class="nav-item">Luxury</div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="filter-section">
+                <div class="filter-title">Category</div>
+                <div class="filter-options">
+                    <button class="filter-btn active">Sneakers</button>
+                    <button class="filter-btn">Luxury</button>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <div class="filter-title">US Size</div>
+                <div class="filter-options">
+                    <button class="filter-btn">Men</button>
+                    <button class="filter-btn">Women</button>
+                    <button class="filter-btn">Youth/Toddler</button>
+                </div>
+                <div class="size-grid" style="margin-top: 1rem;">
+                    <button class="size-btn">4</button>
+                    <button class="size-btn">4.5</button>
+                    <button class="size-btn">5</button>
+                    <button class="size-btn">5.5</button>
+                    <button class="size-btn">6</button>
+                    <button class="size-btn">6.5</button>
+                    <button class="size-btn">7</button>
+                    <button class="size-btn">7.5</button>
+                    <button class="size-btn">8</button>
+                    <button class="size-btn">8.5</button>
+                    <button class="size-btn">9</button>
+                    <button class="size-btn">9.5</button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Product Section -->
+        <main class="product-section">
+            <div class="section-header">
+                <h1>Sneakers</h1>
+                <select class="sort-select" id="sortSelect">
+                    <option value="featured">Featured Items</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="newest">Newest First</option>
+                </select>
+            </div>
+
+            <div class="product-grid" id="productGrid">
+                <!-- Products will be loaded here -->
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Sample product data
+        const products = [
+            {
+                id: 1,
+                name: "New Balance 530 White Silver Navy",
+                price: 1290000,
+                originalPrice: 1599000,
+                image: "img/nb530.jpeg",
+                category: "sneakers",
+                brand: "New Balance",
+                sizes: [7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5],
+                condition: "Brand New",
+                description: "We thoroughly check every purchase and guarantee the product's authenticity. The guarantee is valid for 2 days after receiving the product. Contact our Customer Service if you have any concerns.",
+                delivery: "Monday - Saturday 10:00 - 21:00 (GMT+7/WIB)"
+            },
+            {
+                id: 2,
+                name: "Adidas Samba OG Cloud White Core Black",
+                price: 1220000,
+                originalPrice: 2200000,
+                image: "img/adidassamba.jpg",
+                category: "sneakers",
+                brand: "Adidas",
+                sizes: [7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5]
+            },
+            {
+                id: 3,
+                name: "Nike Air Max 90 Black White",
+                price: 2030000,
+                originalPrice: null,
+                image: "img/nikeairmax.jpg",
+                category: "sneakers",
+                brand: "Adidas",
+                sizes: [7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5]
+            },
+            {
+                id: 4,
+                name: "Puma Suede Classic Red Star",
+                price: 1080000,
+                originalPrice: null,
+                image: "img/pumared.jpg",
+                category: "sneakers",
+                brand: "Adidas",
+                sizes: [7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5]
+            },
+            {
+                id: 5,
+                name: "Converse Chuck Taylor All Star",
+                price: 1599000,
+                originalPrice: null,
+                image: "img/conversetaylorstar.jpg",
+                category: "sneakers",
+                brand: "Nike",
+                sizes: [7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5]
+            },
+            {
+                id: 6,
+                name: "Jordan Jumpman Jack Tr Travis Scott Sail",
+                price: 1899000,
+                originalPrice: 2199000,
+                image: "img/jacktraviskanan.jpg",
+                category: "sneakers",
+                brand: "Nike",
+                sizes: [7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5]
+            }
+        ];
+
+        let likedProducts = new Set();
+
+        // Format price to IDR
+        function formatPrice(price) {
+            return 'IDR ' + price.toLocaleString('id-ID');
+        }
+
+        // Calculate discount percentage
+        function calculateDiscount(current, original) {
+            if (!original) return null;
+            return Math.round(((original - current) / original) * 100);
+        }
+
+        // Render products
+        function renderProducts(productsToRender = products) {
+            const productGrid = document.getElementById('productGrid');
+            productGrid.innerHTML = '';
+
+            productsToRender.forEach(product => {
+                const discount = calculateDiscount(product.price, product.originalPrice);
+                
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}" class="product-img">
+                        <div class="heart-icon ${likedProducts.has(product.id) ? 'liked' : ''}" 
+                             onclick="toggleLike(${product.id}, event)">
+                            ♥
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">${product.name}</div>
+                        <div class="price-container">
+                            <span class="current-price">${formatPrice(product.price)}</span>
+                            ${product.originalPrice ? `<span class="original-price">${formatPrice(product.originalPrice)}</span>` : ''}
+                            ${discount ? `<span class="discount-badge">-${discount}%</span>` : ''}
+                        </div>
+                    </div>
+                `;
+                
+                productCard.addEventListener('click', (e) => {
+                    if (!e.target.classList.contains('heart-icon')) {
+                        window.location.href = `detailproduct.html?id=${product.id}`;
+                    }
+                });
+                
+                productGrid.appendChild(productCard);
+            });
+        }
+
+        // Toggle like functionality
+        function toggleLike(productId, event) {
+            event.stopPropagation();
+            const heartIcon = event.target;
+            
+            if (likedProducts.has(productId)) {
+                likedProducts.delete(productId);
+                heartIcon.classList.remove('liked');
+            } else {
+                likedProducts.add(productId);
+                heartIcon.classList.add('liked');
+            }
+        }
+
+        // Filter functionality
+        document.querySelectorAll('.filter-btn, .size-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (this.closest('.filter-options')) {
+                    this.closest('.filter-options').querySelectorAll('.filter-btn').forEach(b => {
+                        b.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                }
+                
+                if (this.classList.contains('size-btn')) {
+                    this.classList.toggle('selected');
+                }
+            });
+        });
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const filteredProducts = products.filter(product => 
+                product.name.toLowerCase().includes(searchTerm) ||
+                product.brand.toLowerCase().includes(searchTerm)
+            );
+            renderProducts(filteredProducts);
+        });
+
+        // Sort functionality
+        document.getElementById('sortSelect').addEventListener('change', function(e) {
+            const sortBy = e.target.value;
+            let sortedProducts = [...products];
+            
+            switch(sortBy) {
+                case 'price-low':
+                    sortedProducts.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-high':
+                    sortedProducts.sort((a, b) => b.price - a.price);
+                    break;
+                case 'newest':
+                    sortedProducts.reverse();
+                    break;
+                default:
+                    break;
+            }
+            
+            renderProducts(sortedProducts);
+        });
+
+       document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', function () {
+        document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+        this.classList.add('active');
+
+        const category = this.textContent.toLowerCase();
+        const filtered = products.filter(p => p.category === category);
+        renderProducts(filtered);
+    });
+});
+
+        // Initialize the website
+        function init() {
+            renderProducts();
+        }
+
+        init();
+    </script>
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WSKicks - Product Details</title>
+    <link rel="stylesheet" href="styledetailproduct.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">WSKICKS</div>
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="Type any products here">
+            </div>
+            <div class="auth-buttons">
+                <a href="#" class="auth-btn">Login</a>
+                <a href="#" class="auth-btn">Register</a>
+            </div>
+        </div>
+        
+        <nav class="nav-menu">
+            <div class="nav-menu-container">
+                <div class="nav-items">
+                    <div class="nav-item blind-box">Blind Box</div>
+                    <div class="nav-item active">Sneakers</div>
+                    <div class="nav-item">Luxury</div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <a href="index.html">Sneakers</a> / <a href="#">New Balance</a> / <span id="breadcrumbName"></span>
+    </div>
+
+    <!-- Product Detail -->
+    <div class="product-detail">
+        <div class="image-section">
+            <img id="mainImage" class="main-image" src="" alt="Product">
+        </div>
+
+        <div class="info-section">
+            <div class="hot-label">Hot Product</div>
+            <h1 class="product-name" id="productName"></h1>
+            <div class="price">
+                <span id="currentPrice"></span>
+                <span id="originalPrice" class="original-price"></span>
+            </div>
+
+            <div class="size-chart">
+                <p>Size Chart:</p>
+            <div id="sizeOptions">
+                <button class="size-btn" onclick="selectSize(this, '32')">32</button>
+                <button class="size-btn" onclick="selectSize(this, '33')">33</button>
+                <button class="size-btn" onclick="selectSize(this, '34')">34</button>
+                <button class="size-btn" onclick="selectSize(this, '35')">35</button>
+                <button class="size-btn" onclick="selectSize(this, '36')">36</button>
+                <button class="size-btn" onclick="selectSize(this, '37')">37</button>
+                <button class="size-btn" onclick="selectSize(this, '38')">38</button>
+                <button class="size-btn" onclick="selectSize(this, '39')">39</button>
+                <button class="size-btn" onclick="selectSize(this, '40')">40</button>
+                <button class="size-btn" onclick="selectSize(this, '41')">41</button>
+                <button class="size-btn" onclick="selectSize(this, '42')">42</button>
+                <button class="size-btn" onclick="selectSize(this, '42')">43</button>
+                <button class="size-btn" onclick="selectSize(this, '42')">44</button>
+                 </div>
+            </div>
+
+            <div class="condition-buttons">
+                <button class="condition-btn active">Brand New</button>
+                <button class="condition-btn">Used</button>
+                <button class="condition-btn">Pre-Order</button>
+            </div>
+
+            <div class="size-warning">PLEASE MAKE SURE THE SIZE FITS YOU.</div>
+
+            <div class="quantity-selector">
+                <button class="quantity-btn" onclick="updateQuantity(-1)">-</button>
+                <span class="quantity" id="quantity">1</span>
+                <button class="quantity-btn" onclick="updateQuantity(1)">+</button>
+            </div>
+
+            <div class="description" id="description"></div>
+            <div class="delivery" id="delivery"></div>
+            <button onclick="addToCart()" class="add-to-cart-btn">Tambah ke Keranjang</button>
+
+
+            <div class="share-section">
+                <div class="share-text">Share this product to YOUR friends!</div>
+                <div class="share-icons">
+                    <div class="share-icon">📷</div>
+                    <div class="share-icon">📘</div>
+                    <div class="share-icon">🐦</div>
+                    <div class="share-icon">📧</div>
+                    <div class="share-icon">📋</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample product data (same as in index.html)
+        const products = [
+            {
+                id: 1,
+                name: "New Balance 530 White Silver Navy",
+                price: 1290000,
+                originalPrice: 1599000,
+                image: "img/nb530.jpeg",
+                category: "sneakers",
+                brand: "New Balance",
+                condition: "Brand New",
+                description: "We thoroughly check every purchase and guarantee the product's authenticity. The guarantee is valid for 2 days after receiving the product. Contact our Customer Service if you have any concerns.",
+                delivery: "Monday - Saturday 10:00 - 21:00 (GMT+7/WIB)"
+            },
+            {
+                id: 2,
+                name: "Adidas Samba OG Cloud White Core Black",
+                price: 1220000,
+                originalPrice: 2200000,
+                image: "img/adidassamba.jpg",
+                category: "sneakers",
+                brand: "Adidas",
+            },
+            {
+                id: 3,
+                name: "Nike Air Max 90 Black White",
+                price: 2030000,
+                originalPrice: null,
+                image: "img/nikeairmax.jpg",
+                category: "sneakers",
+                brand: "Adidas",
+                sizes: [7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5]
+            },
+            {
+                id: 4,
+                name: "Puma Suede Classic Red Star",
+                price: 1080000,
+                originalPrice: null,
+                image: "img/pumared.jpg",
+                category: "sneakers",
+                brand: "Adidas",
+                sizes: [7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5]
+            },
+            {
+                id: 5,
+                name: "Converse Chuck Taylor All Star",
+                price: 1599000,
+                originalPrice: null,
+                image: "img/conversetaylorstar.jpg",
+                category: "sneakers",
+                brand: "Nike",
+                sizes: [7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5]
+            },
+            {
+                id: 6,
+                name: "Jordan Jumpman Jack Tr Travis Scott Sail",
+                price: 1899000,
+                originalPrice: 2199000,
+                image: "img/jacktraviskanan.jpg",
+                category: "sneakers",
+                brand: "Nike",
+                sizes: [7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5]
+            }
+        ];
+
+        
+
+        // Format price to IDR
+        function formatPrice(price) {
+            return 'IDR ' + price.toLocaleString('id-ID');
+        }
+
+        // Get product ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = parseInt(urlParams.get('id'));
+        const product = products.find(p => p.id === productId);
+
+        if (product) {
+            // Populate product details
+            document.getElementById('mainImage').src = product.image;
+            document.getElementById('productName').textContent = product.name;
+            document.getElementById('breadcrumbName').textContent = product.name;
+            document.getElementById('currentPrice').textContent = formatPrice(product.price);
+            
+            if (product.originalPrice) {
+                document.getElementById('originalPrice').textContent = formatPrice(product.originalPrice);
+            }
+
+            if (product.description) {
+                document.getElementById('description').textContent = product.description;
+            }
+
+            if (product.delivery) {
+                document.getElementById('delivery').textContent = product.delivery;
+            }
+        }
+
+        // Quantity selector
+        let quantity = 1;
+        function updateQuantity(change) {
+            quantity = Math.max(1, quantity + change);
+            document.getElementById('quantity').textContent = quantity;
+        }
+
+        // Condition buttons
+        document.querySelectorAll('.condition-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+        document.querySelectorAll('.condition-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+            });
+    });
+        function addToCart() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const selectedCondition = document.querySelector('.condition-btn.active').textContent;
+
+    const item = {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        quantity: quantity,
+        condition: selectedCondition
+    };
+
+    // Jika produk dengan kondisi sama sudah ada di keranjang, tambahkan jumlahnya
+    const existing = cart.find(p => p.id === item.id && p.condition === item.condition);
+    if (existing) {
+        existing.quantity += item.quantity;
+    } else {
+        cart.push(item);
+    }
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+    alert("Produk telah ditambahkan ke keranjang!");
+}
+   function addToCart() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const selectedCondition = document.querySelector('.condition-btn.active').textContent;
+
+    const item = {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: image,
+        quantity: quantity,
+        condition: selectedCondition
+    };
+
+    // Cek apakah produk dengan kondisi yang sama sudah ada
+    const existing = cart.find(p => p.id === item.id && p.condition === item.condition);
+    if (existing) {
+        existing.quantity += item.quantity;
+    } else {
+        cart.push(item);
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    // Redirect langsung ke cart.html
+    window.location.href = "cart.html";
+}
+
+function toggleSizeChart() {
+    const chart = document.getElementById("sizeChart");
+    chart.style.display = (chart.style.display === "none") ? "block" : "none";
+}
+
+ let selectedSize = null;
+
+  function selectSize(button, size) {
+    selectedSize = size;
+
+    // hapus class 'active' dari semua tombol
+    document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
+
+    // beri class 'active' ke tombol yang dipilih
+    button.classList.add('active');
+  }
+
+  function addToCart() {
+    if (!selectedSize) {
+      alert("Pilih ukuran terlebih dahulu!");
+      return;
+    }
+
+     const selectedCondition = document.querySelector('.condition-btn.active').textContent;
+
+  const item = {
+    id: product.id,
+    name: product.name,
+    image: product.image,
+    selectedSize: selectedSize,
+    quantity: quantity,
+    condition: selectedCondition,
+    price: product.price // bisa dikembangkan sesuai harga per size
+  };
+
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  const existingIndex = cart.findIndex(
+    p => p.id === item.id && p.selectedSize === item.selectedSize && p.condition === item.condition
+  );
+
+  if (existingIndex !== -1) {
+    cart[existingIndex].quantity += item.quantity;
+  } else {
+    cart.push(item);
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  window.location.href = "cart.html";
+}
+
+    </script>
+</body>
+</html>
