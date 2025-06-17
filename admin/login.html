@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WSKicks - Admin Login</title>
-    <link rel="stylesheet" href="stylelogin.css">
+    <link rel="stylesheet" href="css/stylelogin.css">
 </head>
 <body>
     <div class="admin-login-container fade-in">
@@ -127,7 +127,6 @@
 
         // Fungsi untuk redirect ke admin dashboard
         function redirectToAdminDashboard(adminData) {
-            // Simpan data admin di sessionStorage
             sessionStorage.setItem('adminLoggedIn', 'true');
             sessionStorage.setItem('adminData', JSON.stringify({
                 email: adminData.email,
@@ -136,8 +135,7 @@
                 loginTime: new Date().toISOString()
             }));
             
-            // Redirect ke admin dashboard
-            window.location.href = 'admin.html';
+            window.location.href = 'index.html';
         }
 
         // Fungsi untuk log login attempt
@@ -146,15 +144,13 @@
                 timestamp: new Date().toISOString(),
                 email: email,
                 success: success,
-                ip: 'Client-side', // Dalam aplikasi nyata, ini akan dari server
+                ip: 'Client-side',
                 userAgent: userAgent
             };
             
-            // Simpan log di localStorage (dalam aplikasi nyata, kirim ke server)
             let loginLogs = JSON.parse(localStorage.getItem('adminLoginLogs')) || [];
             loginLogs.push(logEntry);
             
-            // Simpan maksimal 100 log terakhir
             if (loginLogs.length > 100) {
                 loginLogs = loginLogs.slice(-100);
             }
@@ -170,77 +166,55 @@
             const password = document.getElementById('adminPassword').value;
             const loginBtn = document.getElementById('adminLoginBtn');
             
-            // Validasi input kosong
             if (!email || !password) {
                 showMessage('error', 'Please fill in all required fields.');
                 return;
             }
             
-            // Tampilkan loading
             showMessage('loading');
             loginBtn.disabled = true;
             loginBtn.innerHTML = '🔄 Authenticating...';
             
-            // Simulasi proses autentikasi admin
             setTimeout(() => {
                 const adminData = validateAdminCredentials(email, password);
                 
                 if (adminData) {
-                    // Login berhasil
                     logLoginAttempt(email, true);
                     showMessage('success');
                     
-                    // Redirect setelah 1.5 detik
                     setTimeout(() => {
                         redirectToAdminDashboard(adminData);
                     }, 1500);
-                    
                 } else {
-                    // Login gagal
                     logLoginAttempt(email, false);
                     showMessage('error', 'Invalid admin credentials. Access denied.');
                     
-                    // Reset button
                     loginBtn.disabled = false;
                     loginBtn.innerHTML = '🔐 Admin Login';
-                    
-                    // Clear password field untuk keamanan
                     document.getElementById('adminPassword').value = '';
                 }
-            }, 1200); // Simulasi delay autentikasi
+            }, 1200);
         });
 
-        // Cek apakah admin sudah login sebelumnya
         window.addEventListener('load', function() {
             const adminLoggedIn = sessionStorage.getItem('adminLoggedIn');
             const adminData = JSON.parse(sessionStorage.getItem('adminData') || '{}');
             
             if (adminLoggedIn === 'true' && adminData.email) {
-                // Jika sudah login, bisa redirect langsung atau tampilkan pesan
                 console.log('Admin sudah login:', adminData.name);
-                
-                // Uncomment untuk auto-redirect admin yang sudah login:
-                // showMessage('success');
-                // setTimeout(() => {
-                //     window.location.href = 'admin..html';
-                // }, 1000);
             }
         });
 
-        // Fokus otomatis ke email field
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('adminEmail').focus();
         });
 
-        // Keyboard shortcuts
         document.addEventListener('keydown', function(e) {
-            // Ctrl/Cmd + Enter untuk submit form
             if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
                 document.getElementById('adminLoginForm').dispatchEvent(new Event('submit'));
             }
         });
 
-        // Prevent multiple rapid submissions
         let isSubmitting = false;
         document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
             if (isSubmitting) {
@@ -253,7 +227,6 @@
             }, 2000);
         });
 
-        // Clear messages when user starts typing
         document.getElementById('adminEmail').addEventListener('input', function() {
             showMessage('error', '', false);
         });

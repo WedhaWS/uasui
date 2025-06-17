@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - WSKICKS</title>
-    <link rel="stylesheet" href="admin.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body class="admin-body">
@@ -19,7 +19,7 @@
                 <div class="user-menu">
                     <span id="admin-name">Admin User</span>
                     <div class="user-dropdown">
-                        <a href="../profile.html">Profile</a>
+                        <a href="profile.html">Profile</a>
                         <a href="login.html" onclick="logout()">Logout</a>
                     </div>
                 </div>
@@ -152,8 +152,7 @@
                                 <th>Category</th>
                                 <th>Price</th>
                                 <th>Stock</th>
-                                <th>Status</th>
-                                <th>Actions</th>
+                                <th>Status</thaggia                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="products-table-body">
@@ -242,7 +241,7 @@
                         <input type="text" id="article-search" placeholder="Search articles...">
                         <select id="article-category-filter">
                             <option value="all">All Categories</option>
-                            <option value="history">History</option>
+                            <itle value="history">History</option>
                             <option value="care">Care & Maintenance</option>
                             <option value="releases">New Releases</option>
                             <option value="trends">Trends</option>
@@ -270,7 +269,7 @@
 
             <!-- Analytics Tab -->
             <div class="tab-content" id="analytics-tab">
-                <div class="page-header">
+                <divANALYTICS class="page-header">
                     <h1>Analytics</h1>
                 </div>
 
@@ -332,7 +331,13 @@
         </main>
     </div>
 
-    <script src="main.js"></script>
-    <script src="admin.js"></script>
+    <script>
+        function logout() {
+            sessionStorage.removeItem('adminLoggedIn');
+            sessionStorage.removeItem('adminData');
+            window.location.href = 'login.html';
+        }
+    </script>
+    <script src="js/admin.js"></script>
 </body>
 </html>
